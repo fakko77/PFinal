@@ -1,0 +1,29 @@
+{% extends 'my_all_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+                       <h1> Connexion </h1> <br>
+                <div class="row justify-content-center">
+
+                    <form method="post"  role="form" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="text" name="username" placeholder="Utilisateur">
+                        <br><br>
+                        <input type="password" name="password" placeholder="Mot de passe">
+                        <br>                        <br>
+
+                            <input type="submit" value="GO!" />
+                            </form>
+
+
+                    </div>
+                                        <br>
+
+                </div>
+
+
+
+
+{% endblock %}
