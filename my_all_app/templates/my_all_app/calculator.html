@@ -2,10 +2,24 @@
 
 {% block content %}
 {% load static %}
+                       <h1> Connexion </h1> <br>
+                <div class="row justify-content-center">
 
-<h1>calculator</h1>
+                    <form method="post"  role="form" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="text" name="username" placeholder="Utilisateur">
+                        <br><br>
+                        <input type="password" name="password" placeholder="Mot de passe">
+                        <br>                        <br>
+
+                            <input type="submit" value="GO!" />
+                            </form>
 
 
+                    </div>
+                                        <br>
+
+                </div>
 
 
 {% endblock %}
