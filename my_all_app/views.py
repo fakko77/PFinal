@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from .forms import IndexForm
 
 
 def view_login(request):
@@ -54,7 +55,8 @@ def calculator(request):
 
 def setting(request):
     if request.user.is_authenticated:
-        return render(request, 'my_all_app/setting.html')
+        form = IndexForm()
+        return render(request, 'my_all_app/setting.html',{'form': form})
     else:
         return render(request, 'my_all_app/login.html')
 
