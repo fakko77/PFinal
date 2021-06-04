@@ -2,15 +2,32 @@
 
 {% block content %}
 {% load static %}
+            </div>
+</div>
+            <div class="row">
+                  <div class="col-lg-5">
+<div class="card card-chart">
+                  <div class="col-sm-6 text-left">
+                    <iframe src="https://sslecal2.forexprostools.com?ecoDayBackground=%23d050de&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&importance=3&features=datepicker,timezone&countries=110,17,25,34,32,6,37,26,5,22,39,93,14,48,10,35,105,43,38,4,36,12,72&calType=week&timeZone=58&lang=5" width="650" height="467" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+                  </div>
+  </div>
+                    </div>
 
-<h1>setting</h1>
+                 <div class="col-lg-5">
+<div class="card card-chart">
+                  <div class="col-sm-6 text-left">
 
-<h2>New index</h2>
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p  }}
+        {{ form }}
         <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+                  <br> <br>
+                  </div>
+  </div>
+                    </div>
 
+
+
+                </div>
 
 
 {% endblock %}
