@@ -2,32 +2,96 @@
 
 {% block content %}
 {% load static %}
-            </div>
-</div>
+
             <div class="row">
-                  <div class="col-lg-5">
-<div class="card card-chart">
-                  <div class="col-sm-6 text-left">
-                    <iframe src="https://sslecal2.forexprostools.com?ecoDayBackground=%23d050de&columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&importance=3&features=datepicker,timezone&countries=110,17,25,34,32,6,37,26,5,22,39,93,14,48,10,35,105,43,38,4,36,12,72&calType=week&timeZone=58&lang=5" width="650" height="467" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
-                  </div>
-  </div>
+                <div class="col-lg-5">
+                    <div class="card card-chart">
+                        <div class="col-sm-6 text-left">
+                        <h1>User settings </h1>
+                            <h3>User name: {{request.user.username}}</h3>
+                            <h3>User Email: {{request.user.email}} </h3>
+                            <button type="button" class="btn btn-primary btn-sm">Edit account</button>
+                        </div>
                     </div>
-
-                 <div class="col-lg-5">
-<div class="card card-chart">
-                  <div class="col-sm-6 text-left">
-
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form }}
-        <button type="submit" class="save btn btn-default">Save</button>
-                  <br> <br>
-                  </div>
-  </div>
-                    </div>
-
-
-
                 </div>
+                <div class="col-lg-5">
+                    <div class="card card-chart " style="display:flex; flex-direction: row ;">
+                        <div class="col-sm-6 text-left">
+                            <form method="POST" class="post-form">
+                                {% csrf_token %}
+                                <h1>Index Add</h1>
+                                {{ form }}
+                                <button type="submit" class="save btn btn-default">Save</button>
+                                <br> <br>
+                            </form>
+                        </div>
+                        <div class="col-sm-6 text-left">
+                                <h1> Edit Index</h1>
+                            <table class="table">
+
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Index</th>
+                                    <th scope="col">delete</th>
+                                 </tr>
+                                </thead>
+                            <tbody>
+                            {% for all in all %}
+                             <tr>
+                                <th scope="row"></th>
+                                <td><h4>{{all.name}}<h4/></td>
+                                 <td> <a href="{% url 'deleteIndex' indexId=all.id %}"><i class="fas fa-trash"></i></a></td>
+                             </tr>
+                            {% endfor %}
+
+
+                             </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-lg-5">
+                     <div class="card card-chart " style="display:flex; flex-direction: row ;">
+                        <div class="col-sm-6 text-left">
+                            <form method="POST" class="post-form">
+                                {% csrf_token %}
+                                <h1> Indicator Add</h1>
+                                {{ form2 }}
+                                <button type="submit" class="save btn btn-default">Save</button>
+                                <br> <br>
+                            </form>
+                        </div>
+                         <div class="col-sm-6 text-left">
+                                <h1> Indicator Edit</h1>
+                            <table class="table">
+
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Index</th>
+                                    <th scope="col">Info</th>
+                                    <th scope="col">delete</th>
+                                 </tr>
+                                </thead>
+                            <tbody>
+                            {% for indicator in indicator %}
+                             <tr>
+                                <th scope="row"></th>
+                                <td><h4>{{indicator.name}}<h4/></td>
+                                 <td><abbr title="{{indicator.description}}"><i class="fas fa-info"></i></abbr></td>
+                                 <td> <a href="{% url 'deleteIndicator' indicatorId=indicator.id %}"><i class="fas fa-trash"></i></a></td>
+
+                             </tr>
+                            {% endfor %}
+
+
+                             </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 {% endblock %}

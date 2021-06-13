@@ -4,22 +4,28 @@
 {% load static %}
 
 
-                       <h1> Connexion </h1> <br>
                 <div class="row justify-content-center">
-
-                    <form method="post"  role="form" action="{% url 'login' %}">
+                     <form method="post" class="form-login" role="form" action="{% url 'login' %}">
+                    <h1> Connexion </h1> <br>
                         {% csrf_token %}
-                        <input type="text" name="username" placeholder="Utilisateur">
+
+                         <span style="display:flex;">
+                         <i class="fas fa-user fa-2x"></i>
+                         <input type="text" class="form-control form-control-lg" name="username" placeholder="Utilisateur" class="form-control">
+                         </span>
                         <br><br>
-                        <input type="password" name="password" placeholder="Mot de passe">
+                         <span style="display:flex;">
+                             <i class="fas fa-key fa-2x"></i>
+                        <input type="password" class="form-control form-control-lg"  name="password" placeholder="Mot de passe">
+                         </span>
                         <br>                        <br>
 
-                            <input type="submit" value="GO!" />
+                           <button type="sumbit" class="btn btn-primary btn-lg">Login</button>
                             </form>
 
 
                     </div>
-                                        <br>
+
 
                 </div>
 

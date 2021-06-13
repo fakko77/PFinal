@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Indicator(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(null=True)
-    user = models.IntegerField(unique=True, null=True)
+    user = models.IntegerField(unique=False, null=True)
 
     def __str__(self):
         return self.name
@@ -12,7 +12,7 @@ class Indicator(models.Model):
 
 class Index(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    user = models.IntegerField(unique=True, null=True)
+    user = models.IntegerField(unique=False, null=True)
 
 
 
