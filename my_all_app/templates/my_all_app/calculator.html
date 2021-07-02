@@ -4,16 +4,19 @@
 {% load static %}
                         <div class="row">
                 <div class="col-lg-5">
-                    <div class="card card-chart">
+                    <div class="card card-chart"   style="display:flex; flex-direction: row ;" >
                         <div class="col-sm-6 text-left">
                         <h1>Calculator </h1>
-                            <form>
+                               <div class="card card-chart ">
+                            <form method="POST" class="post-form">
+                                {% csrf_token %}
   <div class="form-group">
     <label for="cars">Choose a index:</label>
-  <select name="indexselect" id="indexselect">
+  <select required="required"  name="indexselect" id="indexselect">
       <br>
+      <option></option>
        {% for index in index %}
-          <option name="index" id="index" value="index">{{index.name}}</option>
+          <option>{{index.name}}</option>
       {% endfor %}
 
   </select>
@@ -21,18 +24,35 @@
   </div>
   <div class="form-group">
     <label >Volume</label>
-    <input type="number"  name="volume,   " id="volume" value="volume" step="0.01" min="0.01" max="5">
+    <input type="number" required="required"  name="volume" id="volume" value="volume" step="0.01" min="0.01" max="5">
+      <br><br>
+       <label >SL</label>
+    <input type="number"  required="required"  name="sl" id="sl" value="sl" step="1" min="1" max="35">
   </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">show</button>
 </form>
+
+                               </div>
+
+
                         </div>
+
+                         <div class="col-sm-6 text-left">
+                        <h1>Calculator </h1>
+                               <div class="card card-chart ">
+                                    <h2>money risk : {{money}} eur </h2>
+
+                               </div>
+
+
+                        </div>
+
+
                     </div>
                 </div>
-                <div class="col-lg-5">
+
+
+                            <div class="col-lg-5">
                     <div class="card card-chart " style="display:flex; flex-direction: row ;">
                         <div class="col-sm-6 text-left">
                             <form method="POST" class="post-form">

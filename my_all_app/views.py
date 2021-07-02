@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from .forms import IndexForm , IndicatorForm
+from .forms import IndexForm , IndicatorForm, PositionForm
 from .models import Index , Indicator
 from django.http import HttpResponseRedirect
+import requests
+import json
 
 
 def view_login(request):
@@ -29,7 +31,13 @@ def index(request):
 
 def add(request):
     if request.user.is_authenticated:
-        return render(request, 'my_all_app/add.html')
+        form = PositionForm(request.POST)
+        context = {
+            'form': form,
+        }
+        if request.method == 'POST':
+            pass
+        return render(request, 'my_all_app/add.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
@@ -54,6 +62,23 @@ def calculator(request):
         'index': idexAll,
     }
     if request.user.is_authenticated:
+        print("herre")
+        if request.method == 'POST':
+            index = request.POST.get('indexselect')
+            volume = request.POST.get('volume', False)
+            sl = request.POST.get('sl', False)
+            print("hooooooooooooo", index, volume , sl)
+            r = requests.get('https://financialmodelingprep.com/api/v3/quote/'+ index + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+            price = r.json()[0]['price']
+            eur = float((0.0001 * (float(volume) * 100000)/float(price) ) * float(sl))
+            resultat = round(eur,2)
+            context = {
+                'index': idexAll,
+                'money': resultat,
+            }
+
+
+
         return render(request, 'my_all_app/calculator.html', context)
     else:
         return render(request, 'my_all_app/login.html')
