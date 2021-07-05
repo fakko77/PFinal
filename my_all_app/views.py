@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from .forms import IndexForm , IndicatorForm, PositionForm
-from .models import Index , Indicator
+from .forms import IndexForm, IndicatorForm, PositionForm
+from .models import Index, Indicator, Position
 from django.http import HttpResponseRedirect
 import requests
 import json
@@ -36,7 +36,49 @@ def add(request):
             'form': form,
         }
         if request.method == 'POST':
-            pass
+            if form.is_valid():
+                print("etape 3")
+                user = request.user.id
+                position_index = form.cleaned_data.get('position_index')
+                volume = form.cleaned_data.get('volume')
+                price = "0004"
+                be = form.cleaned_data.get('be')
+                tp1 = form.cleaned_data.get('tp1')
+                tp2 = form.cleaned_data.get('tp2')
+                position_indicator = form.cleaned_data.get('position_indicator')
+                comment = form.cleaned_data.get('comment')
+
+                PositionNew = Position(position_index=position_index, volume=volume, price=price, be=be, tp1=tp1,
+                                       tp2=tp2, comment=comment, user=user )
+                PositionNew.save()
+
+
+                if position_indicator != None :
+                    cpt = 0
+                    while cpt < 2:
+                        indicator = Indicator.objects.get(name=position_indicator[cpt])
+                        print(indicator.id)
+                        PositionNew.position_indicator.add(indicator.id)
+                        cpt = cpt + 1
+                    PositionNew.save()
+
+
+            else:
+                print(form.errors)
+
+
+                """
+                if len(position_indicator) != 0 :
+                    len = len(position_indicator)
+                    print("iciiiiiiiii")
+                    print(len)
+                    cpt = 0
+                    while cpt < len:
+                        indicator =  Indicator.objects.filter(name=position_indicator[cpt])
+                        PositionNew.position_indicator.add(indicator)
+                        cpt = cpt + 1
+                    PositionNew.save()"""
+
         return render(request, 'my_all_app/add.html', context)
     else:
         return render(request, 'my_all_app/login.html')
