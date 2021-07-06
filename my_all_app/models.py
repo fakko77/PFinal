@@ -33,5 +33,8 @@ class Position(models.Model):
     comment = models.TextField(null=True)
     user = models.IntegerField(unique=False, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 

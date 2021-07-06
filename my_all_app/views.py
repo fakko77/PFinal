@@ -47,37 +47,23 @@ def add(request):
                 tp2 = form.cleaned_data.get('tp2')
                 position_indicator = form.cleaned_data.get('position_indicator')
                 comment = form.cleaned_data.get('comment')
-
                 PositionNew = Position(position_index=position_index, volume=volume, price=price, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user )
                 PositionNew.save()
+                """
+                object = Indicator.objects.get(id=1)
+                PositionNew.position_indicator.add(object.id)
+                PositionNew.save()
 
-
-                if position_indicator != None :
-                    cpt = 0
-                    while cpt < 2:
-                        indicator = Indicator.objects.get(name=position_indicator[cpt])
-                        print(indicator.id)
-                        PositionNew.position_indicator.add(indicator.id)
-                        cpt = cpt + 1
-                    PositionNew.save()
-
+                """
+                for position_indicator in position_indicator:
+                    object = Indicator.objects.get(name=position_indicator.name)
+                    PositionNew.position_indicator.add(object.id)
+                PositionNew.save()
 
             else:
                 print(form.errors)
 
-
-                """
-                if len(position_indicator) != 0 :
-                    len = len(position_indicator)
-                    print("iciiiiiiiii")
-                    print(len)
-                    cpt = 0
-                    while cpt < len:
-                        indicator =  Indicator.objects.filter(name=position_indicator[cpt])
-                        PositionNew.position_indicator.add(indicator)
-                        cpt = cpt + 1
-                    PositionNew.save()"""
 
         return render(request, 'my_all_app/add.html', context)
     else:
@@ -93,7 +79,11 @@ def manage(request):
 
 def history(request):
     if request.user.is_authenticated:
-        return render(request, 'my_all_app/history.html')
+        Historique = Position.objects.filter(user=request.user.id)
+        context = {
+            'hist': Historique,
+        }
+        return render(request, 'my_all_app/history.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
@@ -104,7 +94,6 @@ def calculator(request):
         'index': idexAll,
     }
     if request.user.is_authenticated:
-        print("herre")
         if request.method == 'POST':
             index = request.POST.get('indexselect')
             volume = request.POST.get('volume', False)
