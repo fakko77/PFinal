@@ -48,14 +48,8 @@ def add(request):
                 position_indicator = form.cleaned_data.get('position_indicator')
                 comment = form.cleaned_data.get('comment')
                 PositionNew = Position(position_index=position_index, volume=volume, price=price, be=be, tp1=tp1,
-                                       tp2=tp2, comment=comment, user=user )
+                                       tp2=tp2, comment=comment, user=user)
                 PositionNew.save()
-                """
-                object = Indicator.objects.get(id=1)
-                PositionNew.position_indicator.add(object.id)
-                PositionNew.save()
-
-                """
                 for position_indicator in position_indicator:
                     object = Indicator.objects.get(name=position_indicator.name)
                     PositionNew.position_indicator.add(object.id)
@@ -63,8 +57,6 @@ def add(request):
 
             else:
                 print(form.errors)
-
-
         return render(request, 'my_all_app/add.html', context)
     else:
         return render(request, 'my_all_app/login.html')
