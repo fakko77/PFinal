@@ -1,0 +1,18 @@
+.col-test {
+  //  display : flex;
+   // justify-content: center;
+
+    width: 100%;
+
+}
+.form-control{
+            width: 40% !important;
+}
+.show-indicator{
+     display: flex;
+     justify-content: space-around;
+     flex-wrap: wrap;
+     width:50%;
+
+
+}
