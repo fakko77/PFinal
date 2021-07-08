@@ -13,7 +13,9 @@ urlpatterns = [
         path('login/', views.view_login, name='login'),
         path('deleteIndex/<int:indexId>/', views.indexDelete, name='deleteIndex'),
         path('deleteIndicator/<int:indicatorId>/', views.IndicatorDelete, name='deleteIndicator'),
-
+        path('deletePosition/<int:positionId>/', views.positionDelete, name='deletePostion'),
+        path('positionWin/<int:positionId>/', views.positionWin, name='winPostion'),
+        path('positionDefeat/<int:positionId>/', views.positionDefeat, name='defeatPostion'),
 
 
 

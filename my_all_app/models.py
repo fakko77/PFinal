@@ -31,6 +31,7 @@ class Position(models.Model):
     tp3 = models.FloatField(null=True)
     position_indicator = models.ManyToManyField(Indicator)
     comment = models.TextField(null=True)
+    status = models.CharField(max_length=20, null=True)
     user = models.IntegerField(unique=False, null=True)
 
     def __str__(self):

@@ -6,6 +6,7 @@ from .forms import IndexForm, IndicatorForm, PositionForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 import requests
 import json
 
@@ -65,7 +66,23 @@ def add(request):
 
 def manage(request):
     if request.user.is_authenticated:
-        return render(request, 'my_all_app/manage.html')
+        Historique = Position.objects.filter(user=request.user.id, status=None)
+        Historique = Historique.order_by('date').reverse()
+        paginator = Paginator(Historique, 6)
+        page = request.GET.get('page')
+        try:
+            Historique = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            Historique = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            Historique = paginator.page(paginator.num_pages)
+
+        context = {
+            'hist': Historique,
+        }
+        return render(request, 'my_all_app/manage.html',context)
     else:
         return render(request, 'my_all_app/login.html')
 
@@ -73,6 +90,9 @@ def manage(request):
 def history(request):
     if request.user.is_authenticated:
         Historique = Position.objects.filter(user=request.user.id)
+        Historique = Historique.exclude(status=None)
+        Historique = Historique.order_by('date').reverse()
+
 
         paginator = Paginator(Historique, 6)
         page = request.GET.get('page')
@@ -152,15 +172,39 @@ def setting(request):
     else:
         return render(request, 'my_all_app/login.html')
 
+
 def indexDelete(request, indexId):
     index = Index.objects.get(id=indexId)
     index.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 def IndicatorDelete(request, indicatorId):
     indicator = Indicator.objects.get(id=indicatorId)
     indicator.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def positionDelete(request, positionId):
+    position = Position.objects.get(id=positionId)
+    position.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def positionWin(request, positionId):
+    postion = Position.objects.get(id=positionId)
+    postion.status = "win"
+    postion.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def positionDefeat(request, positionId):
+    postion = Position.objects.get(id=positionId)
+    postion.status = "defeat"
+    postion.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+
 
 
 

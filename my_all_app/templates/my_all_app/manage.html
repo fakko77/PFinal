@@ -6,6 +6,59 @@
 <h1>manage</h1>
 
 
+                             <table class="table">
+  <thead class="table table-striped">
+    <tr>
+      <th scope="col">Index</th>
+      <th scope="col">Date</th>
+      <th scope="col">volume</th>
+      <th scope="col">price</th>
+      <th scope="col">be</th>
+      <th scope="col">tp1</th>
+      <th scope="col">tp2</th>
+      <th scope="col">tp3</th>
+      <th scope="col">Indicator</th>
+      <th scope="col">comment</th>
+      <th scope="col">status</th>
+      <th scope="col">trash</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for hist in hist %}
+    <tr>
+      <th scope="row">{{ hist.position_index}}</th>
+      <td>{{ hist.date|date:'c'}}</td>
+      <td>{{ hist.volume}}</td>
+      <td>{{ hist.price}}</td>
+      <td>{{ hist.be}}</td>
+      <td>{{ hist.tp1}}</td>
+      <td>{{ hist.tp2}}</td>
+      <td>{{ hist.tp3}}</td>
+      <td>
+        <ul>
+       {% for position_indicator in hist.position_indicator.all %}
+         <li>{{ position_indicator }}</li>
+      {% endfor %}
+          </ul>
+      </td>
+      <td>{{ hist.comment}}</td>
+        <td><a href="{% url 'winPostion' positionId=hist.id %}"><i class="green fas fa-thumbs-up fa-2x " style="color: green;"></i></a> <p>
+        </p><a href="{% url 'defeatPostion' positionId=hist.id %}"><i class="fas fa-thumbs-down fa-2x" style="color:red;"></i></td>
+        <td><a href="{% url 'deletePostion' positionId=hist.id %}"><i class="fas fa-trash-alt fa-2x" style="color:#c752e6"></i></a></td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+ <ul class="pager">
+      {% if hist.has_previous %}
+          <li><a href="?page={{ hist.previous_page_number }}">Précédent</a></li>
+      {% endif %}
+      {% if hist.has_next %}
+          <li><a href="?page={{ hist.next_page_number }}">Suivant</a></li>
+      {% endif %}
+    </ul>
+
 
 
 {% endblock %}

@@ -9,6 +9,7 @@
   <thead class="table table-striped">
     <tr>
       <th scope="col">Index</th>
+      <th scope="col">Date</th>
       <th scope="col">volume</th>
       <th scope="col">price</th>
       <th scope="col">be</th>
@@ -17,6 +18,7 @@
       <th scope="col">tp3</th>
       <th scope="col">Indicator</th>
       <th scope="col">comment</th>
+      <th scope="col">status</th>
     </tr>
   </thead>
 
@@ -24,6 +26,7 @@
   {% for hist in hist %}
     <tr>
       <th scope="row">{{ hist.position_index}}</th>
+      <td>{{ hist.date|date:'c'}}</td>
       <td>{{ hist.volume}}</td>
       <td>{{ hist.price}}</td>
       <td>{{ hist.be}}</td>
@@ -38,6 +41,12 @@
           </ul>
       </td>
       <td>{{ hist.comment}}</td>
+        {% if hist.status == "win" %}
+        <td><i class="green fas fa-thumbs-up fa-2x " style="color: green;"></i></td>
+        {% else %}
+        <td><i class="fas fa-thumbs-down fa-2x" style="color:red;"></i></td>
+        {% endif %}
+        
     </tr>
       {% endfor %}
   </tbody>
