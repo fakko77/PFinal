@@ -42,6 +42,14 @@
       {% endfor %}
   </tbody>
 </table>
+ <ul class="pager">
+      {% if hist.has_previous %}
+          <li><a href="?page={{ hist.previous_page_number }}">Précédent</a></li>
+      {% endif %}
+      {% if hist.has_next %}
+          <li><a href="?page={{ hist.next_page_number }}">Suivant</a></li>
+      {% endif %}
+    </ul>
 
 
 

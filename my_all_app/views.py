@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from .forms import IndexForm, IndicatorForm, PositionForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
 from django.http import HttpResponseRedirect
 import requests
@@ -72,6 +73,18 @@ def manage(request):
 def history(request):
     if request.user.is_authenticated:
         Historique = Position.objects.filter(user=request.user.id)
+
+        paginator = Paginator(Historique, 6)
+        page = request.GET.get('page')
+        try:
+            Historique = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            Historique = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            Historique = paginator.page(paginator.num_pages)
+
         context = {
             'hist': Historique,
         }
