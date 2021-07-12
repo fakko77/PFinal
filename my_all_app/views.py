@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from .forms import IndexForm, IndicatorForm, PositionForm
+from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
 from django.http import HttpResponseRedirect
@@ -114,27 +114,71 @@ def history(request):
 
 
 def calculator(request):
+    formcal = CalculatorForm(request.POST)
     idexAll = Index.objects.filter(user=request.user.id)
     context = {
         'index': idexAll,
+        'formcal': formcal,
     }
     if request.user.is_authenticated:
         if request.method == 'POST':
+            if formcal.is_valid():
+                try:
+                    index1 = request.POST.get('Index')
+                    index2 = "EUR" + index1[0:3]
+                    print(index2)
+                    balance = formcal.cleaned_data.get('balance')
+                    risk = formcal.cleaned_data.get('risk')
+                    sl = formcal.cleaned_data.get('sl')
+                    r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
+                                        + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                    price = r1.json()[0]['price']
+                    r2 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
+                                        + index2 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                    convert = r2.json()[0]['price']
+                    print(price)
+                    result = round((float(balance) * float(convert)) * (float(risk)/100) * float(price) / (float(sl) * 10),2)
+                    print(result)
+                    context = {
+                        'index': idexAll,
+                        'money': result,
+                    }
+
+                except IndexError:
+
+                    index1 = request.POST.get('Index')
+                    index2 = index1[0:3] + "EUR"
+                    print(index2)
+                    balance = formcal.cleaned_data.get('balance')
+                    risk = formcal.cleaned_data.get('risk')
+                    sl = formcal.cleaned_data.get('sl')
+                    r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
+                                      + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                    price = r1.json()[0]['price']
+                    convert = 1
+                    print(price)
+                    result = round((float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10),2)
+                    print(result)
+                    context = {
+                        'index': idexAll,
+                        'money': result,
+                    }
+
+
+            """
             index = request.POST.get('indexselect')
             volume = request.POST.get('volume', False)
             sl = request.POST.get('sl', False)
             print("hooooooooooooo", index, volume , sl)
             r = requests.get('https://financialmodelingprep.com/api/v3/quote/'+ index + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
             price = r.json()[0]['price']
-            eur = float((0.0001 * (float(volume) * 100000)/float(price) ) * float(sl))
+            eur = float((0.0001 * (float(volume) * 100000)/float(price)) * float(sl))
             resultat = round(eur,2)
             context = {
                 'index': idexAll,
                 'money': resultat,
             }
-
-
-
+            """
         return render(request, 'my_all_app/calculator.html', context)
     else:
         return render(request, 'my_all_app/login.html')

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 class Indicator(models.Model):
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(null=True)
@@ -16,8 +17,6 @@ class Index(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 
 class Position(models.Model):
