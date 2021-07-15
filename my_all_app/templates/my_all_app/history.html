@@ -15,7 +15,6 @@
       <th scope="col">be</th>
       <th scope="col">tp1</th>
       <th scope="col">tp2</th>
-      <th scope="col">tp3</th>
       <th scope="col">Indicator</th>
       <th scope="col">comment</th>
       <th scope="col">status</th>
@@ -32,7 +31,6 @@
       <td>{{ hist.be}}</td>
       <td>{{ hist.tp1}}</td>
       <td>{{ hist.tp2}}</td>
-      <td>{{ hist.tp3}}</td>
       <td>
         <ul>
        {% for position_indicator in hist.position_indicator.all %}
@@ -58,9 +56,6 @@
           <li><a href="?page={{ hist.next_page_number }}">Suivant</a></li>
       {% endif %}
     </ul>
-
-
-
 
 
 {% endblock %}
