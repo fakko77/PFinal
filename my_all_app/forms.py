@@ -20,7 +20,7 @@ class PositionForm(forms.ModelForm):
         model = Position
         fields = ('position_index', 'volume', 'be', 'tp1', 'tp2', 'position_indicator', 'comment')
         widgets = {
-            'position_index': forms.Select(attrs={'class': 'test'}),
+            'position_index': forms.Select(attrs={'class': 'form-control rs'}),
             'volume': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'min': '0.01', 'max': '5'}),
             'be': forms.NumberInput(attrs={'class': 'form-control', 'step': '1', 'min': '1', 'max': '50'}),
             'tp1': forms.NumberInput(attrs={'class': 'form-control', 'step': '1', 'min': '1', 'max': '500'}),
@@ -41,7 +41,6 @@ class CalculatorForm(forms.Form):
     risk = forms.IntegerField(label='RISK %')
     sl = forms.IntegerField(label='SL')
     Index = forms.ChoiceField(choices=CHOICES)
-
 
 
 

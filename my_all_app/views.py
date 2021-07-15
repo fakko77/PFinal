@@ -12,7 +12,7 @@ import json
 
 
 def view_login(request):
-    """view for login"""
+    """view that allows view for login"""
     if request.method == 'POST':
         username = request.POST.get('username', False)
         password = request.POST.get('password', False)
@@ -25,6 +25,7 @@ def view_login(request):
 
 
 def index(request):
+    """home"""
     if request.user.is_authenticated:
         return render(request, 'my_all_app/index.html')
     else:
@@ -32,8 +33,9 @@ def index(request):
 
 
 def add(request):
+    """view that allows add a new position """
     if request.user.is_authenticated:
-        form = PositionForm(request.POST)
+        form = PositionForm(request.POST or None, request.FILES or None)
         context = {
             'form': form,
         }
@@ -65,48 +67,42 @@ def add(request):
 
 
 def manage(request):
+    """view that allows Manage position"""
     if request.user.is_authenticated:
-        Historique = Position.objects.filter(user=request.user.id, status=None)
-        Historique = Historique.order_by('date').reverse()
-        paginator = Paginator(Historique, 6)
+        historic = Position.objects.filter(user=request.user.id, status=None)
+        historic = historic.order_by('date').reverse()
+        paginator = Paginator(historic, 6)
         page = request.GET.get('page')
         try:
-            Historique = paginator.page(page)
+            historic = paginator.page(page)
         except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            Historique = paginator.page(1)
+            historic = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            Historique = paginator.page(paginator.num_pages)
-
+            historic = paginator.page(paginator.num_pages)
         context = {
-            'hist': Historique,
+            'hist': historic,
         }
-        return render(request, 'my_all_app/manage.html',context)
+        return render(request, 'my_all_app/manage.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
 
 def history(request):
+    """ view that allows show all history of position """
     if request.user.is_authenticated:
-        Historique = Position.objects.filter(user=request.user.id)
-        Historique = Historique.exclude(status=None)
-        Historique = Historique.order_by('date').reverse()
-
-
-        paginator = Paginator(Historique, 6)
+        historic = Position.objects.filter(user=request.user.id)
+        historic = historic.exclude(status=None)
+        historic = historic.order_by('date').reverse()
+        paginator = Paginator(historic, 6)
         page = request.GET.get('page')
         try:
-            Historique = paginator.page(page)
+            historic = paginator.page(page)
         except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            Historique = paginator.page(1)
+            historic = paginator.page(1)
         except EmptyPage:
-            # If page is out of range (e.g. 9999), deliver last page of results.
-            Historique = paginator.page(paginator.num_pages)
-
+            historic = paginator.page(paginator.num_pages)
         context = {
-            'hist': Historique,
+            'hist': historic,
         }
         return render(request, 'my_all_app/history.html', context)
     else:
@@ -114,33 +110,33 @@ def history(request):
 
 
 def calculator(request):
-    formcal = CalculatorForm(request.POST)
-    idexAll = Index.objects.filter(user=request.user.id)
+    """view which allows to calculate """
+    form = CalculatorForm(request.POST or None, request.FILES or None)
     context = {
-        'index': idexAll,
-        'formcal': formcal,
+        'formcal': form,
     }
     if request.user.is_authenticated:
         if request.method == 'POST':
-            if formcal.is_valid():
+            if form.is_valid():
                 try:
                     index1 = request.POST.get('Index')
                     index2 = "EUR" + index1[0:3]
                     print(index2)
-                    balance = formcal.cleaned_data.get('balance')
-                    risk = formcal.cleaned_data.get('risk')
-                    sl = formcal.cleaned_data.get('sl')
+                    balance = form.cleaned_data.get('balance')
+                    risk = form.cleaned_data.get('risk')
+                    sl = form.cleaned_data.get('sl')
                     r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
-                                        + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                                      + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     price = r1.json()[0]['price']
                     r2 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
-                                        + index2 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                                      + index2 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     convert = r2.json()[0]['price']
                     print(price)
-                    result = round((float(balance) * float(convert)) * (float(risk)/100) * float(price) / (float(sl) * 10),2)
+                    result = round(
+                        (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
                     print(result)
                     context = {
-                        'index': idexAll,
+                        'formcal': form,
                         'money': result,
                     }
 
@@ -149,42 +145,28 @@ def calculator(request):
                     index1 = request.POST.get('Index')
                     index2 = index1[0:3] + "EUR"
                     print(index2)
-                    balance = formcal.cleaned_data.get('balance')
-                    risk = formcal.cleaned_data.get('risk')
-                    sl = formcal.cleaned_data.get('sl')
+                    balance = form.cleaned_data.get('balance')
+                    risk = form.cleaned_data.get('risk')
+                    sl = form.cleaned_data.get('sl')
                     r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
                                       + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     price = r1.json()[0]['price']
                     convert = 1
                     print(price)
-                    result = round((float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10),2)
+                    result = round(
+                        (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
                     print(result)
                     context = {
-                        'index': idexAll,
+                        'formcal': form,
                         'money': result,
                     }
-
-
-            """
-            index = request.POST.get('indexselect')
-            volume = request.POST.get('volume', False)
-            sl = request.POST.get('sl', False)
-            print("hooooooooooooo", index, volume , sl)
-            r = requests.get('https://financialmodelingprep.com/api/v3/quote/'+ index + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
-            price = r.json()[0]['price']
-            eur = float((0.0001 * (float(volume) * 100000)/float(price)) * float(sl))
-            resultat = round(eur,2)
-            context = {
-                'index': idexAll,
-                'money': resultat,
-            }
-            """
         return render(request, 'my_all_app/calculator.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
 
 def setting(request):
+    """ view that allows configure this app"""
     if request.user.is_authenticated:
         idexAll = Index.objects.filter(user=request.user.id)
         IndicatorAll = Indicator.objects.filter(user=request.user.id)
@@ -193,7 +175,7 @@ def setting(request):
         context = {
             'form': form1,
             'form2': form2,
-            'all':idexAll,
+            'all': idexAll,
             'indicator': IndicatorAll,
         }
         if request.method == "POST":
@@ -205,50 +187,50 @@ def setting(request):
                 indicator_add.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             elif form1.is_valid():
-                user  = request.user.id
-                name  = form1.cleaned_data.get('name')
-                index_add = Index(name=name,user=user)
+                user = request.user.id
+                name = form1.cleaned_data.get('name')
+                index_add = Index(name=name, user=user)
                 index_add.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             else:
                 pass
-        return render(request, 'my_all_app/setting.html',context)
+        return render(request, 'my_all_app/setting.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
 
-def indexDelete(request, indexId):
-    index = Index.objects.get(id=indexId)
+def indexDelete(request, indexid):
+    """ view that allows delete a index  """
+    index = Index.objects.get(id=indexid)
     index.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def IndicatorDelete(request, indicatorId):
-    indicator = Indicator.objects.get(id=indicatorId)
+def IndicatorDelete(request, indicatorid):
+    """ view that allows delete a indicator  """
+    indicator = Indicator.objects.get(id=indicatorid)
     indicator.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def positionDelete(request, positionId):
-    position = Position.objects.get(id=positionId)
+def positionDelete(request, positionid):
+    """ view that allows delete a postion  """
+    position = Position.objects.get(id=positionid)
     position.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def positionWin(request, positionId):
-    postion = Position.objects.get(id=positionId)
-    postion.status = "win"
-    postion.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-def positionDefeat(request, positionId):
-    postion = Position.objects.get(id=positionId)
-    postion.status = "defeat"
-    postion.save()
+def positionWin(request, positionid):
+    """ view that allows close in profit """
+    position = Position.objects.get(id=positionid)
+    position.status = "win"
+    position.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-
-
-
-
+def positionDefeat(request, positionid):
+    """view that close in defeat """
+    position = Position.objects.get(id=positionid)
+    position.status = "defeat"
+    position.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

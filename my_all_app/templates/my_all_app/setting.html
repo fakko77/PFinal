@@ -4,23 +4,15 @@
 {% load static %}
 
             <div class="row">
-                <div class="col-lg-5">
-                    <div class="card card-chart">
-                        <div class="col-sm-6 text-left">
-                        <h1>User settings </h1>
-                            <h3>User name: {{request.user.username}}</h3>
-                            <h3>User Email: {{request.user.email}} </h3>
-                            <button type="button" class="btn btn-primary btn-sm">Edit account</button>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-lg-5">
                     <div class="card card-chart " style="display:flex; flex-direction: row ;">
                         <div class="col-sm-6 text-left">
                             <form method="POST" class="post-form">
                                 {% csrf_token %}
                                 <h1>Index Add</h1>
-                                {{ form }}
+                                <h3>index name:</h3>
+                                {{ form.name }}
                                 <button type="submit" class="save btn btn-default">Save</button>
                                 <br> <br>
                             </form>
@@ -57,7 +49,10 @@
                             <form method="POST" class="post-form">
                                 {% csrf_token %}
                                 <h1> Indicator Add</h1>
-                                {{ form2 }}
+                                <h3>indicator name</h3>
+                                {{ form2.name }}
+                                <h3>Information</h3>
+                                {{ form2.description }}
                                 <button type="submit" class="save btn btn-default">Save</button>
                                 <br> <br>
                             </form>
@@ -88,6 +83,16 @@
 
                              </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="coluser">
+                    <div class="card card-chart">
+                        <div class="col-sm-6 text-left">
+                        <h1>User settings </h1>
+                            <h3>User name: {{request.user.username}}</h3>
+                            <h3>User Email: {{request.user.email}} </h3>
+                            <button type="button" class="btn btn-primary btn-sm">Edit account</button>
                         </div>
                     </div>
                 </div>

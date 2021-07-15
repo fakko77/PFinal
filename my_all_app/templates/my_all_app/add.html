@@ -2,13 +2,15 @@
 
 {% block content %}
 {% load static %}
-<div class="col-test">
-  <div class="col-sm-6 text-left">
- <form method="POST" class="post-form">
+<div class="col-lg-10">
+
+                        <form method="POST" class="post-form-add">
                                 {% csrf_token %}
-                                <h1> Position Add</h1>
+                            <!--
+                                 <h1> Position Add</h1>
                                 <H3>Index : </H3>
                                 {{ form.position_index }}
+
                                 <H3>volume : </H3>
                                 {{ form.volume }}
                                 <H3>be : </H3>
@@ -23,20 +25,50 @@
                                         {% for position_indicator in form.position_indicator %}
                                         <p>{{ position_indicator }}</p>
                                          {% endfor %}
-
-
                                     </span>
                                  <br>
                                  <H3>comment : </H3>
                                 {{ form.comment }}
-
-                                <br>  <br>
-
+                                <br>
                                 <button type="submit" class="save btn btn-default">Save</button>
-                                <br> <br>
+                                <br>-->
+                              <div class="form-group">
+                            <label>Index : </label> <br>
+                             {{ form.position_index }}
+                          </div>
+                          <div class="form-group">
+                            <label>volume :</label><br>
+                            {{ form.volume }}
+                          </div>
+                            <div class="form-group">
+                            <label>be :</label><br>
+                            {{ form.be }}
+                          </div>
+                            <div class="form-group">
+                            <label>tp1 :</label><br>
+                            {{ form.tp1 }}
+                          </div>
+                            <div class="form-group">
+                            <label>tp2 :</label><br>
+                            {{ form.tp2 }}
+                          </div>
+                            <div class="form-group">
+                            <label>Indicateur :</label><br>
+                             <span class="show-indicator">
+                                        {% for position_indicator in form.position_indicator %}
+                                        <p>{{ position_indicator }}</p>
+                                         {% endfor %}
+                             </span>
+                          </div>
+                             <div class="form-group">
+                            <label>comment :</label><br>
+                            {{ form.comment }}
+                          </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
-</div>
-</div>
+
+
 
 {% endblock %}
