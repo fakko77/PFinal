@@ -7,8 +7,14 @@ class Indicator(models.Model):
     description = models.TextField(null=True)
     user = models.IntegerField(unique=False, null=True)
 
-    def __str__(self):
+    def __str__(self, **kwargs):
         return self.name
+
+    def retrurnName(self):
+        return self.name
+
+    def retrurnDescription(self):
+        return self.description
 
 
 class Index(models.Model):
@@ -16,6 +22,9 @@ class Index(models.Model):
     user = models.IntegerField(unique=False, null=True)
 
     def __str__(self):
+        return self.name
+
+    def retrurnName(self):
         return self.name
 
 
