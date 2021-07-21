@@ -29,7 +29,13 @@ class TestIndicatorForm(TestCase):
 
 class TestPositionForm(TestCase):
     def test_form_is_valid(self):
-        form_data = {'position_index': 'position_index', 'volume': '0.05', 'be': '25', 'tp1': '10',
-                     'tp2': '15', 'position_indicator': 'position_indicator', 'comment': 'comment'}
+        form_data = {'position_index': 'eurusd', 'volume': '1', 'be': '25', 'sl': '25', 'tp1': '10',
+                     'tp2': '15', 'position_indicator': '', 'comment': 'comment'}
         form = PositionForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_form_is_false(self):
+        form_data = {'position_index': 'position_index', 'volume': '0.05','sl': '25', 'be': '25', 'tp1': '10',
+                     'tp2': '15', 'position_indicator': 'position_indicator', 'comment': 'comment'}
+        form = PositionForm(data=form_data)
+        self.assertFalse(form.is_valid())
