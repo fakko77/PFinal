@@ -33,6 +33,7 @@ class Position(models.Model):
     volume = models.FloatField(validators=[MinValueValidator(0.01), MaxValueValidator(10)],)
     price = models.FloatField()
     date = models.DateField(auto_now_add=True)
+    sl = models.FloatField(null=True)
     be = models.FloatField(null=True)
     tp1 = models.FloatField(null=True)
     tp2 = models.FloatField(null=True)
@@ -42,8 +43,7 @@ class Position(models.Model):
     status = models.CharField(max_length=20, null=True)
     user = models.IntegerField(unique=False, null=True)
 
-    def __str__(self):
-        return self.name
+
 
 
 

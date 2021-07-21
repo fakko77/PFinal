@@ -6,23 +6,27 @@
                         <form method="POST" class="post-form-add">
                                 {% csrf_token %}
                               <div class="form-group">
-                            <label>Index : </label> <br>
+                            <label>Index : </label>
                              {{ form.position_index }}
                           </div>
                           <div class="form-group">
-                            <label>volume :</label><br>
+                            <label>volume :</label>
                             {{ form.volume }}
                           </div>
                             <div class="form-group">
-                            <label>be :</label><br>
+                            <label>be :</label>
                             {{ form.be }}
                           </div>
                             <div class="form-group">
-                            <label>tp1 :</label><br>
+                            <label>sl :</label>
+                            {{ form.sl }}
+                          </div>
+                            <div class="form-group">
+                            <label>tp1 :</label>
                             {{ form.tp1 }}
                           </div>
                             <div class="form-group">
-                            <label>tp2 :</label><br>
+                            <label>tp2 :</label>
                             {{ form.tp2 }}
                           </div>
                             <div class="form-group">
