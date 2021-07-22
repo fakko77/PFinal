@@ -43,6 +43,8 @@ class Position(models.Model):
     status = models.CharField(max_length=20, null=True)
     user = models.IntegerField(unique=False, null=True)
 
+    def returnIndicator(self):
+        return self.position_indicator.name
 
 
 

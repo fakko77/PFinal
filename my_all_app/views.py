@@ -51,6 +51,7 @@ def add(request):
                 tp2 = form.cleaned_data.get('tp2')
                 position_indicator = form.cleaned_data.get('position_indicator')
                 comment = form.cleaned_data.get('comment')
+                print(position_index, position_indicator)
                 PositionNew = Position(position_index=position_index, volume=volume, price=price, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user)
                 PositionNew.save()

@@ -36,11 +36,12 @@
       <td>{{ hist.tp2}}</td>
       <td>{{ hist.tp3}}</td>
       <td>
-        <ul>
+     <ul>
        {% for position_indicator in hist.position_indicator.all %}
          <li>{{ position_indicator }}</li>
       {% endfor %}
           </ul>
+
       </td>
       <td>{{ hist.comment}}</td>
         <td><a href="{% url 'winPostion' positionId=hist.id %}"><i class="green fas fa-thumbs-up fa-2x " style="color: green;"></i></a> <p>
