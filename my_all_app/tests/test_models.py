@@ -7,6 +7,8 @@ class TestIndicator(TestCase):
     def setUp(self):
         self.indicatorDemo = Indicator(name='Test', description="Lorem ipsum dolor"
                                                                 " sit amet, consectetur adipiscing elit")
+        self.indicatorDemo1 = Indicator(name='Test', description="Lorem ipsum dolor"
+                                                                " sit amet, consectetur adipiscing elit")
 
     def test_indicator_name(self):
         self.assertEqual(self.indicatorDemo.retrurnName(), 'Test')
@@ -15,13 +17,14 @@ class TestIndicator(TestCase):
         self.assertEqual(self.indicatorDemo.retrurnDescription(), "Lorem ipsum dolor"
                                                                   " sit amet, consectetur adipiscing elit")
 
+    def test_matching_object(self):
+        self.assertEqual(self.indicatorDemo, self.indicatorDemo)
+
 
 class TestIndex(TestCase):
 
     def setUp(self):
         self.indexDemo = Index(name='Test')
-        self.indicatorDemo = Indicator(name='Test', description="Lorem ipsum dolor"
-                                                                " sit amet, consectetur adipiscing elit")
 
     def test_indicator_name(self):
         self.assertEqual(self.indexDemo.retrurnName(), 'Test')
@@ -47,8 +50,8 @@ class TestPosition(TestCase):
     def test_position_indicator_notequal(self):
         self.assertNotEqual(self.positionDemo.position_indicator, self.indicatorDemo.name)
 
+    def test_content_matching_volume(self):
+        self.assertEqual(self.positionDemo.volume, "0.05")
 
-
-
-
-
+    def test_content_matching_comment(self):
+        self.assertEqual(self.positionDemo.comment, "text")

@@ -5,7 +5,6 @@ from django.conf import settings
 from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
-from django.http import HttpResponseRedirect
 from django.db.models import Q
 import requests
 import json
@@ -49,10 +48,13 @@ def add(request):
                 be = form.cleaned_data.get('be')
                 tp1 = form.cleaned_data.get('tp1')
                 tp2 = form.cleaned_data.get('tp2')
-                position_indicator = form.cleaned_data.get('position_indicator')
-                comment = form.cleaned_data.get('comment')
+                position_indicator = form.cleaned_data.get(
+                    'position_indicator')
+                comment = form.cleaned_data.get(
+                    'comment')
                 print(position_index, position_indicator)
-                PositionNew = Position(position_index=position_index, volume=volume, price=price, be=be, tp1=tp1,
+                PositionNew = Position(position_index=position_index,
+                                       volume=volume, price=price, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user)
                 PositionNew.save()
                 for position_indicator in position_indicator:
