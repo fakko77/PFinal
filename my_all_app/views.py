@@ -26,7 +26,13 @@ def view_login(request):
 def index(request):
     """home"""
     if request.user.is_authenticated:
-        return render(request, 'my_all_app/index.html')
+        win = Position.objects.filter(user=request.user.id, status="win")
+        defeat = Position.objects.filter(user=request.user.id, status="defeat")
+        context = {
+            'win': win,
+            'defeat': defeat,
+        }
+        return render(request, 'my_all_app/index.html', context)
     else:
         return render(request, 'my_all_app/login.html')
 
