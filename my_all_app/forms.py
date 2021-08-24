@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from my_all_app.models import Index, Indicator, Position
+from django.contrib.auth.forms import PasswordChangeForm
+from django.forms import TextInput, EmailInput, PasswordInput, CharField
 
 
 class IndexForm(forms.ModelForm):
@@ -55,3 +57,27 @@ class CalculatorForm(forms.Form):
     risk = forms.IntegerField(label='RISK %')
     sl = forms.IntegerField(label='SL')
     Index = forms.ChoiceField(choices=CHOICES)
+
+"""
+class PasswordChangeCustomForm(PasswordChangeForm):
+    error_css_class = 'has-error'
+    error_messages = {'password_incorrect':
+                          "L'ancien mot de passe n'est pas correct. Essayez encore."}
+
+    old_password = CharField(required=True, label='old password',
+                             widget=PasswordInput(attrs={
+                                 'class': 'form-control'}),
+                             error_messages={
+                                 'required': 'Le mot de passe ne peut pas être vide'})
+
+    new_password1 = CharField(required=True, label='new password',
+                              widget=PasswordInput(attrs={
+                                  'class': 'form-control'}),
+                              error_messages={
+                                  'required': 'Le mot de passe ne peut pas être vide'})
+    new_password2 = CharField(required=True, label='new password',
+                              widget=PasswordInput(attrs={
+                                  'class': 'form-control'}),
+                              error_messages={
+                                  'required': 'Le mot de passe ne peut être vide'})
+"""

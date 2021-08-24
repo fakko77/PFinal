@@ -11,6 +11,7 @@ urlpatterns = [
         path('history/', views.history, name='history'),
         path('setting/', views.setting, name='setting'),
         path('login/', views.view_login, name='login'),
+        path('edit/', views.editAccount, name='edit'),
         path('deleteIndex/<int:indexid>/', views.indexDelete,
              name='deleteIndex'),
         path('deleteIndicator/<int:indicatorid>/', views.IndicatorDelete,
