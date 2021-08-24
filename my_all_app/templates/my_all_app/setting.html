@@ -12,7 +12,13 @@
                                 {% csrf_token %}
                                 <h1>Index Add</h1>
                                 <h3>index name:</h3>
-                                {{ form.name }}
+                                  <input list="name" type="text" id="list" name="name">
+                                    <datalist id="name">
+                                      {% for indexDispo in indexDispo %}
+                                    <option value="{{indexDispo}}"></option>
+                                    {% endfor %}
+                                    </datalist>
+                                <br><br>
                                 <button type="submit" class="save btn btn-default">Save</button>
                                 <br> <br>
                             </form>

@@ -9,6 +9,7 @@ from django.db.models import Q
 import requests
 import json
 
+#avec selection
 
 def view_login(request):
     """view that allows view for login"""
@@ -177,16 +178,47 @@ def calculator(request):
 def setting(request):
     """ view that allows configure this app"""
     if request.user.is_authenticated:
+
         idexAll = Index.objects.filter(user=request.user.id)
         IndicatorAll = Indicator.objects.filter(user=request.user.id)
         form1 = IndexForm(request.POST)
+        tab = []
+        print(len(idexAll))
+        i = 0
+        while i < len(idexAll):
+            tab.append(idexAll[i].name)
+            i += 1
+        r1 = requests.get('https://financialmodelingprep.com/api/v3/symbol/'
+                          'available-forex-currency-pairs?apikey=be0024b5e186d1842ee2a98a37e4169b')
+        i = 0
+        tabList = []
+        for symbol in r1.json():
+            tabList.append(r1.json()[i]['symbol'])
+            i += 1
+        print(len(tabList))
+        print(tabList)
+        for tab in tab:
+            i = 0
+            while i < len(tabList):
+                if tabList[i] == tab:
+                    tabList.remove(tab)
+                i += 1
+        print(tabList)
+        """
+        for idexAll in idexAll:
+            tab.append(idexAll.name)
+        
+        """
         form2 = IndicatorForm(request.POST)
         context = {
             'form': form1,
             'form2': form2,
             'all': idexAll,
+            'indexDispo': tabList,
             'indicator': IndicatorAll,
         }
+
+
         if request.method == "POST":
             if form2.is_valid():
                 user = request.user.id

@@ -20428,7 +20428,7 @@ Copyright (c) 2015 Daniel Eden
 .card-plain {
   background: transparent;
   box-shadow: none;
-}
+}  
 
 .card-plain .card-header,
 .card-plain .card-footer {
@@ -20436,6 +20436,10 @@ Copyright (c) 2015 Daniel Eden
   margin-right: 0;
   background-color: transparent;
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 .card-plain:not(.card-subcategories).card-body {
   padding-left: 0;
   padding-right: 0;
