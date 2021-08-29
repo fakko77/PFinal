@@ -3,3 +3,4 @@ branch = True
 omit =
     my_all_project\wsgi.py
     my_all_project\asgi.py
+    my_all_app\views.py

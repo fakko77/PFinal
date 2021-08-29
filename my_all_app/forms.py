@@ -20,10 +20,10 @@ class IndicatorForm(forms.ModelForm):
 class PositionForm(forms.ModelForm):
     class Meta:
         model = Position
-        fields = ('position_index', 'volume', 'be', 'sl', 'tp1', 'tp2',
+        fields = ('volume', 'be', 'sl', 'tp1', 'tp2',
                   'position_indicator', 'comment')
         widgets = {
-            'position_index': forms.Select(attrs={'class': 'form-control rs'}),
+           # 'position_index': forms.Select(attrs={'class': 'form-control rs'}),
             'volume': forms.NumberInput(attrs={'class': 'form-control',
                                                'step': '0.01',
                                                'min': '0.01', 'max': '5'}),

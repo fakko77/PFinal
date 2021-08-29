@@ -44,9 +44,9 @@
 
       </td>
       <td>{{ hist.comment}}</td>
-        <td><a href="{% url 'winPostion' positionId=hist.id %}"><i class="green fas fa-thumbs-up fa-2x " style="color: green;"></i></a> <p>
-        </p><a href="{% url 'defeatPostion' positionId=hist.id %}"><i class="fas fa-thumbs-down fa-2x" style="color:red;"></i></td>
-        <td><a href="{% url 'deletePostion' positionId=hist.id %}"><i class="fas fa-trash-alt fa-2x" style="color:#c752e6"></i></a></td>
+        <td><a href="{% url 'winPostion' positionid=hist.id %}"><i class="green fas fa-thumbs-up fa-2x " style="color: green;"></i></a> <p>
+        </p><a href="{% url 'defeatPostion' positionid=hist.id %}"><i class="fas fa-thumbs-down fa-2x" style="color:red;"></i></td>
+        <td><a href="{% url 'deletePostion' positionid=hist.id %}"><i class="fas fa-trash-alt fa-2x" style="color:#c752e6"></i></a></td>
     </tr>
       {% endfor %}
   </tbody>

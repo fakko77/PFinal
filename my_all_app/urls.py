@@ -12,16 +12,12 @@ urlpatterns = [
         path('setting/', views.setting, name='setting'),
         path('login/', views.view_login, name='login'),
         path('edit/', views.editAccount, name='edit'),
-        path('deleteIndex/<int:indexid>/', views.indexDelete,
-             name='deleteIndex'),
-        path('deleteIndicator/<int:indicatorid>/', views.IndicatorDelete,
-             name='deleteIndicator'),
-        path('deletePosition/<int:positionId>/', views.positionDelete,
-             name='deletePostion'),
-        path('positionWin/<int:positionId>/', views.positionWin,
-             name='winPostion'),
-        path('positionDefeat/<int:positionId>/', views.positionDefeat,
-             name='defeatPostion'),
+        path('signup/', views.signup, name='signup'),
+        path('deleteIndex/<int:indexid>/', views.indexDelete, name='deleteIndex'),
+        path('deleteIndicator/<int:indicatorid>/', views.IndicatorDelete, name='deleteIndicator'),
+        path('deletePosition/<int:positionid>/', views.positionDelete, name='deletePostion'),
+        path('positionWin/<int:positionid>/', views.positionWin, name='winPostion'),
+        path('positionDefeat/<int:positionid>/', views.positionDefeat, name='defeatPostion'),
 
 
 

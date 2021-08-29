@@ -8,7 +8,7 @@ from .models import Index, Indicator, Position
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 import requests
 import json
 
@@ -298,3 +298,17 @@ def editAccount(request):
     else:
         return render(request, 'my_all_app/login.html')
 
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return render(request, 'my_all_app/index.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'my_all_app/signup.html', {'form': form})
