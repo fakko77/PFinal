@@ -1,0 +1,38 @@
+{% extends 'my_all_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+                <div class="row justify-content-center">
+                     <form method="post" class="form-login" role="form" action="{% url 'login' %} " style="display:flex; flex-direction: column">
+                    <h1> Connexion </h1> <br>
+                        {% csrf_token %}
+
+                         <span style="display:flex">
+                         <i class="fas fa-user fa-2x"></i>
+                         <input type="text" class="form-control form-control-lg" name="username" placeholder="Utilisateur" class="form-control">
+                         </span>
+                        <br><br>
+                         <span style="display:flex;">
+                             <i class="fas fa-key fa-2x"></i>
+                        <input type="password" class="form-control form-control-lg"  name="password" placeholder="Mot de passe">
+                         </span>
+
+                         <center><a href="{% url 'signup'%}">sign up</a></center>
+                        <br>
+                           <button type="sumbit" class="btn btn-primary btn-lg">Login</button>
+
+                     </form>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+{% endblock %}

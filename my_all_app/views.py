@@ -12,7 +12,6 @@ from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 import requests
 import json
 
-#avec selection
 
 def view_login(request):
     """view that allows view for login"""
@@ -23,12 +22,11 @@ def view_login(request):
         if user is not None and user.is_active:
             login(request, user)
             return render(request, 'my_all_app/index.html')
-        return render(request, 'my_all_app/login.html')
-    return render(request, 'my_all_app/login.html')
+    return render(request, 'registration/login.html')
 
 
 def index(request):
-    """home"""
+    """view index show all info of the account """
     if request.user.is_authenticated:
         win = Position.objects.filter(user=request.user.id, status="win")
         defeat = Position.objects.filter(user=request.user.id, status="defeat")
@@ -38,23 +36,28 @@ def index(request):
         }
         return render(request, 'my_all_app/index.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def add(request):
     """view that allows add a new position """
     if request.user.is_authenticated:
         form = PositionForm(request.POST or None, request.FILES or None)
+        index = Index.objects.filter(user=request.user.id)
         context = {
             'form': form,
+            'index': index,
         }
         if request.method == 'POST':
             if form.is_valid():
-                print("etape 3")
                 user = request.user.id
-                position_index = form.cleaned_data.get('position_index')
+                position_index = request.POST.get('position_index')
                 volume = form.cleaned_data.get('volume')
-                price = "0004"
+                print(position_index)
+                r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
+                                  + str(position_index) + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
+                print(r1.json())
+                price = r1.json()[0]['price']
                 be = form.cleaned_data.get('be')
                 tp1 = form.cleaned_data.get('tp1')
                 tp2 = form.cleaned_data.get('tp2')
@@ -62,8 +65,9 @@ def add(request):
                     'position_indicator')
                 comment = form.cleaned_data.get(
                     'comment')
+                INDEX = Index.objects.get(name=position_index)
                 print(position_index, position_indicator)
-                PositionNew = Position(position_index=position_index,
+                PositionNew = Position(position_index=INDEX,
                                        volume=volume, price=price, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user)
                 PositionNew.save()
@@ -71,12 +75,13 @@ def add(request):
                     object = Indicator.objects.get(name=position_indicator.name)
                     PositionNew.position_indicator.add(object.id)
                 PositionNew.save()
+                return redirect('manage')
 
             else:
                 print(form.errors)
         return render(request, 'my_all_app/add.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def manage(request):
@@ -97,7 +102,7 @@ def manage(request):
         }
         return render(request, 'my_all_app/manage.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def history(request):
@@ -119,7 +124,7 @@ def history(request):
         }
         return render(request, 'my_all_app/history.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def calculator(request):
@@ -175,7 +180,7 @@ def calculator(request):
                     }
         return render(request, 'my_all_app/calculator.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def setting(request):
@@ -221,7 +226,6 @@ def setting(request):
             'indicator': IndicatorAll,
         }
 
-
         if request.method == "POST":
             if form2.is_valid():
                 user = request.user.id
@@ -240,47 +244,48 @@ def setting(request):
                 pass
         return render(request, 'my_all_app/setting.html', context)
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
-def indexDelete(request, indexid):
+def index_delete(request, indexId):
     """ view that allows delete a index  """
-    index = Index.objects.get(id=indexid)
+    index = Index.objects.get(id=indexId)
     index.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def IndicatorDelete(request, indicatorid):
+def indicator_delete(request, indicatorId):
     """ view that allows delete a indicator  """
-    indicator = Indicator.objects.get(id=indicatorid)
+    indicator = Indicator.objects.get(id=indicatorId)
     indicator.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def positionDelete(request, positionid):
+def position_delete(request, positionId):
     """ view that allows delete a postion  """
-    position = Position.objects.get(id=positionid)
+    position = Position.objects.get(id=positionId)
     position.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def positionWin(request, positionid):
+def position_win(request, positionId):
     """ view that allows close in profit """
-    position = Position.objects.get(id=positionid)
+    position = Position.objects.get(id=positionId)
     position.status = "win"
     position.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def positionDefeat(request, positionid):
+def position_defeat(request, positionId):
     """view that close in defeat """
-    position = Position.objects.get(id=positionid)
+    position = Position.objects.get(id=positionId)
     position.status = "defeat"
     position.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def editAccount(request):
+def edit_password(request):
+    ""
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = PasswordChangeForm(request.user, request.POST)
@@ -296,10 +301,11 @@ def editAccount(request):
 
         return render(request, 'my_all_app/editAccount.html', {'form': form})
     else:
-        return render(request, 'my_all_app/login.html')
+        return render(request, 'registration/login.html')
 
 
 def signup(request):
+    """View for sign up on app"""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
