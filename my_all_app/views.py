@@ -44,9 +44,11 @@ def add(request):
     if request.user.is_authenticated:
         form = PositionForm(request.POST or None, request.FILES or None)
         index = Index.objects.filter(user=request.user.id)
+        IndicatorAll = Indicator.objects.filter(user=request.user.id)
         context = {
             'form': form,
             'index': index,
+            'indicator': IndicatorAll,
         }
         if request.method == 'POST':
             if form.is_valid():
@@ -61,8 +63,12 @@ def add(request):
                 be = form.cleaned_data.get('be')
                 tp1 = form.cleaned_data.get('tp1')
                 tp2 = form.cleaned_data.get('tp2')
-                position_indicator = form.cleaned_data.get(
-                    'position_indicator')
+
+                #position_indicator = form.cleaned_data.get('position_indicator')
+                position_indicator = request.POST.getlist('position_indicator')
+                print("here")
+                print(position_indicator)
+
                 comment = form.cleaned_data.get(
                     'comment')
                 INDEX = Index.objects.get(name=position_index)
@@ -72,7 +78,7 @@ def add(request):
                                        tp2=tp2, comment=comment, user=user)
                 PositionNew.save()
                 for position_indicator in position_indicator:
-                    object = Indicator.objects.get(name=position_indicator.name)
+                    object = Indicator.objects.get(id=position_indicator)
                     PositionNew.position_indicator.add(object.id)
                 PositionNew.save()
                 return redirect('manage')
@@ -187,14 +193,17 @@ def setting(request):
     """ view that allows configure this app"""
     if request.user.is_authenticated:
 
-        idexAll = Index.objects.filter(user=request.user.id)
+        indexAll = Index.objects.filter(user=request.user.id)
+
         IndicatorAll = Indicator.objects.filter(user=request.user.id)
+
         form1 = IndexForm(request.POST)
         tab = []
-        print(len(idexAll))
+        print(len(indexAll))
         i = 0
-        while i < len(idexAll):
-            tab.append(idexAll[i].name)
+
+        while i < len(indexAll):
+            tab.append(indexAll[i].name)
             i += 1
         r1 = requests.get('https://financialmodelingprep.com/api/v3/symbol/'
                           'available-forex-currency-pairs?apikey=be0024b5e186d1842ee2a98a37e4169b')
@@ -212,16 +221,12 @@ def setting(request):
                     tabList.remove(tab)
                 i += 1
         print(tabList)
-        """
-        for idexAll in idexAll:
-            tab.append(idexAll.name)
-        
-        """
+
         form2 = IndicatorForm(request.POST)
         context = {
             'form': form1,
             'form2': form2,
-            'all': idexAll,
+            'all': indexAll,
             'indexDispo': tabList,
             'indicator': IndicatorAll,
         }
@@ -234,6 +239,7 @@ def setting(request):
                 indicator_add = Indicator(name=name, description=description, user=user)
                 indicator_add.save()
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
             elif form1.is_valid():
                 user = request.user.id
                 name = form1.cleaned_data.get('name')

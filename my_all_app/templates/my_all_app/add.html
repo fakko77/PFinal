@@ -35,6 +35,7 @@
                             <label>tp2 :</label>
                             {{ form.tp2 }}
                           </div>
+                            <!--
                             <div class="form-group">
                             <label>Indicateur :</label><br>
                              <span class="show-indicator">
@@ -43,7 +44,20 @@
                                          {% endfor %}
                              </span>
 
+                          </div>-->
+
+                            <div class="form-group">
+                            <label>Indicateur :</label><br>
+                             <span class="show-indicator">
+                                 {% for indicator in indicator %}
+                                 <p><label><input type="checkbox" name="position_indicator" value="{{indicator.id}}" class="form" id="id_position_indicator_{{indicator.id}}">
+                                     {{indicator}}</label></p>
+
+                            {% endfor %}
+                             </span>
+
                           </div>
+
                              <div class="form-group">
                             <label>comment :</label><br>
                             {{ form.comment }}
