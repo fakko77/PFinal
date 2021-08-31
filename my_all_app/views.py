@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm
+from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm, UserCreationForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 import requests
 import json
 
@@ -55,24 +55,16 @@ def add(request):
                 user = request.user.id
                 position_index = request.POST.get('position_index')
                 volume = form.cleaned_data.get('volume')
-                print(position_index)
                 r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
                                   + str(position_index) + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
-                print(r1.json())
                 price = r1.json()[0]['price']
                 be = form.cleaned_data.get('be')
                 tp1 = form.cleaned_data.get('tp1')
                 tp2 = form.cleaned_data.get('tp2')
-
-                #position_indicator = form.cleaned_data.get('position_indicator')
                 position_indicator = request.POST.getlist('position_indicator')
-                print("here")
-                print(position_indicator)
-
                 comment = form.cleaned_data.get(
                     'comment')
                 INDEX = Index.objects.get(name=position_index)
-                print(position_index, position_indicator)
                 PositionNew = Position(position_index=INDEX,
                                        volume=volume, price=price, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user)
@@ -145,7 +137,6 @@ def calculator(request):
                 try:
                     index1 = request.POST.get('Index')
                     index2 = "EUR" + index1[0:3]
-                    print(index2)
                     balance = form.cleaned_data.get('balance')
                     risk = form.cleaned_data.get('risk')
                     sl = form.cleaned_data.get('sl')
@@ -155,10 +146,8 @@ def calculator(request):
                     r2 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
                                       + index2 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     convert = r2.json()[0]['price']
-                    print(price)
                     result = round(
                         (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
-                    print(result)
                     context = {
                         'formcal': form,
                         'money': result,
@@ -168,7 +157,6 @@ def calculator(request):
 
                     index1 = request.POST.get('Index')
                     index2 = index1[0:3] + "EUR"
-                    print(index2)
                     balance = form.cleaned_data.get('balance')
                     risk = form.cleaned_data.get('risk')
                     sl = form.cleaned_data.get('sl')
@@ -176,10 +164,8 @@ def calculator(request):
                                       + index1 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     price = r1.json()[0]['price']
                     convert = 1
-                    print(price)
                     result = round(
                         (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
-                    print(result)
                     context = {
                         'formcal': form,
                         'money': result,
@@ -199,7 +185,6 @@ def setting(request):
 
         form1 = IndexForm(request.POST)
         tab = []
-        print(len(indexAll))
         i = 0
 
         while i < len(indexAll):
@@ -212,15 +197,12 @@ def setting(request):
         for symbol in r1.json():
             tabList.append(r1.json()[i]['symbol'])
             i += 1
-        print(len(tabList))
-        print(tabList)
         for tab in tab:
             i = 0
             while i < len(tabList):
                 if tabList[i] == tab:
                     tabList.remove(tab)
                 i += 1
-        print(tabList)
 
         form2 = IndicatorForm(request.POST)
         context = {
@@ -291,7 +273,7 @@ def position_defeat(request, positionId):
 
 
 def edit_password(request):
-    ""
+    """view for edit password of account"""
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = PasswordChangeForm(request.user, request.POST)

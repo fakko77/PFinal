@@ -2,7 +2,9 @@
 
 {% block content %}
 {% load static %}
-
+            <a  class="btn btn-primary btn-sm" href="{% url 'edit'%}"> Edit Password</a>
+            <a  class="btn btn-primary btn-sm" href="{% url 'edit'%}"> Edit Email</a>
+            <br>
             <div class="row">
 
                 <div class="col-lg-5">
@@ -93,16 +95,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="coluser">
+              <!--  <div class="coluser">
                     <div class="card card-chart">
                         <div class="col-sm-6 text-left">
                         <h1>User settings </h1>
-                            <h3>User name: {{request.user.username}}</h3>
-                            <h3>User Email: {{request.user.email}} </h3>
 
-                                <a  class="btn btn-primary btn-sm" href="{% url 'edit'%}"> Edit Password</a>
+
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 {% endblock %}

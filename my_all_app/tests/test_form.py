@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from my_all_app.forms import IndexForm, IndicatorForm, PositionForm
 from my_all_app.models import Indicator, Index, Position
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 
 
 class TestIndexForm(TestCase):
@@ -55,11 +55,13 @@ class TestPositionForm(TestCase):
         form = PositionForm(data=form_data)
         self.assertFalse(form.is_valid())
 
+
 class TestPasswordChangeForm(TestCase):
     def setUp(self):
         self.c = Client()
         self.user = User.objects.create_user(
             username='fakkotest', password='Password12356@')
+
     def test_form_password_true(self):
         self.c.force_login(self.user)
         form_data = {'old_password': 'Password12356@',
@@ -72,4 +74,16 @@ class TestPasswordChangeForm(TestCase):
         form_data = {'old_password': 'Password12356@',
                      'new_password1': 'Password156@', 'new_password2': 'Password15856@'}
         form = PasswordChangeForm(self.user, data=form_data)
+        self.assertFalse(form.is_valid())
+
+
+class SingTest(TestCase):
+    """class for testing form sing up """
+    def test_register_false(self):
+        """test register false"""
+        form_params = {'username': 'John',
+                       'password': 'a',
+                       'password_confirm': 'a',
+                       'g-recaptcha-response': 'PASSED'}
+        form = UserCreationForm(form_params)
         self.assertFalse(form.is_valid())

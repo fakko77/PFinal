@@ -33,6 +33,8 @@
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
             {{request.user.username}}
+            <br>
+            <p style="font-size: 0.65rem">{{ request.user.email }}</p>
           </a>
         </div>
         {% if user.is_authenticated %}

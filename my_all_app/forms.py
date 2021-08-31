@@ -3,6 +3,8 @@ from django.forms import ModelForm
 from my_all_app.models import Index, Indicator, Position
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import TextInput, EmailInput, PasswordInput, CharField
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class IndexForm(forms.ModelForm):
@@ -58,26 +60,17 @@ class CalculatorForm(forms.Form):
     sl = forms.IntegerField(label='SL')
     Index = forms.ChoiceField(choices=CHOICES)
 
-"""
-class PasswordChangeCustomForm(PasswordChangeForm):
-    error_css_class = 'has-error'
-    error_messages = {'password_incorrect':
-                          "L'ancien mot de passe n'est pas correct. Essayez encore."}
 
-    old_password = CharField(required=True, label='old password',
-                             widget=PasswordInput(attrs={
-                                 'class': 'form-control'}),
-                             error_messages={
-                                 'required': 'Le mot de passe ne peut pas être vide'})
+class UserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
 
-    new_password1 = CharField(required=True, label='new password',
-                              widget=PasswordInput(attrs={
-                                  'class': 'form-control'}),
-                              error_messages={
-                                  'required': 'Le mot de passe ne peut pas être vide'})
-    new_password2 = CharField(required=True, label='new password',
-                              widget=PasswordInput(attrs={
-                                  'class': 'form-control'}),
-                              error_messages={
-                                  'required': 'Le mot de passe ne peut être vide'})
-"""
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user

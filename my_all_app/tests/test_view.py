@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import AnonymousUser, User
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 
 
 class ViewsTest(TestCase):
@@ -12,7 +12,7 @@ class ViewsTest(TestCase):
     def test_index_anonymous_view(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'my_all_app/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_index_login_view(self):
         self.c.force_login(self.user)
@@ -29,7 +29,7 @@ class ViewsTest(TestCase):
     def test_manage_view_anonymous(self):
         response = self.client.get('/my_all/manage/', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'my_all_app/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_history_view(self):
         self.c.force_login(self.user)
@@ -40,7 +40,7 @@ class ViewsTest(TestCase):
     def test_history_view_anonymous(self):
         response = self.client.get('/my_all/history/', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'my_all_app/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_calculator_view(self):
         self.c.force_login(self.user)
@@ -51,7 +51,7 @@ class ViewsTest(TestCase):
     def test_calculator_view_anonymous(self):
         response = self.client.get('/my_all/calculator/', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'my_all_app/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_setting_view(self):
         self.c.force_login(self.user)
@@ -62,7 +62,7 @@ class ViewsTest(TestCase):
     def test_setting_view_anonymous(self):
         response = self.client.get('/my_all/setting/', follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'my_all_app/login.html')
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def test_add_view(self):
         self.c.force_login(self.user)
