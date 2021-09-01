@@ -18,5 +18,6 @@ urlpatterns = [
         path('deletePosition/<int:positionId>/', views.position_delete, name='deletePosition'),
         path('positionWin/<int:positionId>/', views.position_win, name='winPosition'),
         path('positionDefeat/<int:positionId>/', views.position_defeat, name='defeatPosition'),
+        path('positionEdit/<int:positionId>/', views.edit_position, name='editPosition'),
 
 ]

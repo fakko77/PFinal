@@ -13,11 +13,13 @@
       <th scope="col">volume</th>
       <th scope="col">price</th>
       <th scope="col">be</th>
+      <th scope="col">sl</th>
       <th scope="col">tp1</th>
       <th scope="col">tp2</th>
       <th scope="col">Indicator</th>
       <th scope="col">comment</th>
       <th scope="col">status</th>
+      <th scope="col">Trash</th>
     </tr>
   </thead>
 
@@ -29,6 +31,7 @@
       <td>{{ hist.volume}}</td>
       <td>{{ hist.price}}</td>
       <td>{{ hist.be}}</td>
+      <td>{{ hist.sl}}</td>
       <td>{{ hist.tp1}}</td>
       <td>{{ hist.tp2}}</td>
       <td>
@@ -44,7 +47,9 @@
         {% else %}
         <td><i class="fas fa-thumbs-down fa-2x" style="color:red;"></i></td>
         {% endif %}
+        <td><a href="{% url 'deletePosition' positionId=hist.id %}"><i class="fas fa-trash-alt fa-2x" style="color:#c752e6"></i></a></td>
     </tr>
+
       {% endfor %}
   </tbody>
 </table>

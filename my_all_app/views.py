@@ -58,6 +58,7 @@ def add(request):
                 r1 = requests.get('https://financialmodelingprep.com/api/v3/quote/'
                                   + str(position_index) + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                 price = r1.json()[0]['price']
+                sl = form.cleaned_data.get('sl')
                 be = form.cleaned_data.get('be')
                 tp1 = form.cleaned_data.get('tp1')
                 tp2 = form.cleaned_data.get('tp2')
@@ -66,7 +67,7 @@ def add(request):
                     'comment')
                 INDEX = Index.objects.get(name=position_index)
                 PositionNew = Position(position_index=INDEX,
-                                       volume=volume, price=price, be=be, tp1=tp1,
+                                       volume=volume, price=price, sl=sl, be=be, tp1=tp1,
                                        tp2=tp2, comment=comment, user=user)
                 PositionNew.save()
                 for position_indicator in position_indicator:
@@ -306,3 +307,26 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'my_all_app/signup.html', {'form': form})
+
+
+def edit_position(request, positionId):
+    """view for edit password of account"""
+    if request.user.is_authenticated:
+        index = Index.objects.filter(user=request.user.id)
+        IndicatorAll = Indicator.objects.filter(user=request.user.id)
+        position = Position.objects.get(id=positionId)
+        form = PositionForm(request.POST or None, instance=position)
+        context = {
+            'form': form,
+            'index': index,
+            'indicator': IndicatorAll,
+        }
+        if form.is_valid():
+            form.save()
+            return redirect('manage')
+        else:
+            print('error')
+            print(form.errors, len(form.errors))
+        return render(request, 'my_all_app/editPosition.html', context)
+    else:
+        return render(request, 'registration/login.html')

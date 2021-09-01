@@ -82,7 +82,7 @@
                             {% for indicator in indicator %}
                              <tr>
                                 <th scope="row"></th>
-                                <td><h4>{{indicator.name}}<h4/></td>
+                                <td><h4>{{indicator.name}}<h4/> </td>
                                  <td><abbr title="{{indicator.description}}"><i class="fas fa-info"></i></abbr></td>
                                  <td> <a href="{% url 'deleteIndicator' indicatorId=indicator.id %}"><i class="fas fa-trash"></i></a></td>
 

@@ -1,0 +1,66 @@
+{% extends 'my_all_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+            <div class="col-add">
+
+                        <form method="POST" class="post-form-add">
+                                {% csrf_token %}
+                              <div class="form-group">
+                            <label>Index : </label>
+
+                                  <select name="position_index" id="position" class="form-control rs">
+                                      {% for index in index %}
+                                    <option value="{{index}}">{{index}}</option>
+                                     {% endfor %}
+                                </select>
+
+                          </div>
+                          <div class="form-group">
+                            <label>volume :</label>
+                            {{ form.volume }}
+                          </div>
+                            <div class="form-group">
+                            <label>be :</label>
+                            {{ form.be }}
+                          </div>
+                            <div class="form-group">
+                            <label>sl :</label>
+                            {{ form.sl }}
+                          </div>
+                            <div class="form-group">
+                            <label>tp1 :</label>
+                            {{ form.tp1 }}
+                          </div>
+                            <div class="form-group">
+                            <label>tp2 :</label>
+                            {{ form.tp2 }}
+                          </div>
+                            <div class="form-group">
+                            <label>Indicateur :</label><br>
+                             <span class="show-indicator">
+                                 {% for indicator in indicator %}
+                                 <p><label><input type="checkbox" name="position_indicator" value="{{indicator.id}}" class="form" id="id_position_indicator_{{indicator.id}}">
+                                     {{indicator}}</label></p>
+
+                            {% endfor %}
+                             </span>
+
+                          </div>
+
+                             <div class="form-group">
+                            <label>comment :</label><br>
+                            {{ form.comment }}
+                           </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+
+
+
+{% endblock %}
+
+
+<!-- https://tutorial.djangogirls.org/fr/django_forms/ -->
