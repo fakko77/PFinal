@@ -12,6 +12,7 @@ urlpatterns = [
         path('setting/', views.setting, name='setting'),
         path('accounts/login/', views.view_login, name='login'),
         path('edit/', views.edit_password, name='edit'),
+        path('editEmail/', views.edit_email, name='editEmail'),
         path('accounts/signup/', views.signup, name='signup'),
         path('deleteIndex/<int:indexId>/', views.index_delete, name='deleteIndex'),
         path('deleteIndicator/<int:indicatorId>/', views.indicator_delete, name='deleteIndicator'),

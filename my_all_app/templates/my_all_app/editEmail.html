@@ -1,0 +1,20 @@
+{% extends 'my_all_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+            <div class="row">
+                <form method="POST" class="post-form">
+                                {% csrf_token %}
+                    <h3>Reset Password</h3>
+                    <i>{{ form.as_p }}</i>
+                    <br>
+                 <button type="submit" class="save btn btn-default">Save</button>
+                                <br> <br>
+                </form>
+            </div>
+
+
+{% endblock %}
+
+<!-- https://tutorial.djangogirls.org/fr/django_forms/ -->

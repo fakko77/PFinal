@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
 from django.conf import settings
-from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm, UserCreationForm
+from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm, UserCreationForm, EmailChangeForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
+from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
@@ -330,3 +331,16 @@ def edit_position(request, positionId):
         return render(request, 'my_all_app/editPosition.html', context)
     else:
         return render(request, 'registration/login.html')
+
+
+def edit_email(request):
+    """view for edit password of account"""
+    if request.user.is_authenticated:
+        form = EmailChangeForm(request.user, request.POST)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                return redirect('index')
+        else:
+            return render(request, "my_all_app/editEmail.html", {'form': form})
+
