@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Black Dashboard by Creative Tim
+    My all
   </title>
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'my_all_app/css/css.css' %}" />
@@ -33,8 +33,6 @@
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
             {{request.user.username}}
-            <br>
-            <p style="font-size: 0.65rem">{{ request.user.email }}</p>
           </a>
         </div>
         {% if user.is_authenticated %}
