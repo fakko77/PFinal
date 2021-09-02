@@ -16,18 +16,18 @@ class Indicator(models.Model):
     def retrurnDescription(self):
         return self.description
 
-"""
+
 class Index(models.Model):
     name = models.CharField(max_length=200, unique=True)
     user = models.IntegerField(unique=False, null=True)
-
+"""
     def __str__(self):
         return self.name
 
     def retrurnName(self):
         return self.name
-"""
 
+"""
 class Position(models.Model):
     #position_index = models.ForeignKey(Index, on_delete=models.CASCADE, null=True)
     volume = models.FloatField(validators=[MinValueValidator(0.01), MaxValueValidator(10)],)

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from my_all_app.models import Indicator, Position #index
+from my_all_app.models import Index, Indicator, Position
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import TextInput, EmailInput, PasswordInput, CharField
 from django.contrib.auth.forms import UserCreationForm
@@ -8,11 +8,10 @@ from django.contrib.auth.models import User
 
 
 class IndexForm(forms.ModelForm):
-    """
     class Meta:
         model = Index
         fields = ('name',)
-"""
+
 
 class IndicatorForm(forms.ModelForm):
     class Meta:
@@ -51,6 +50,7 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
+    pass
     """
     allPosition = Index.objects.all()
     CHOICES = []
@@ -66,7 +66,8 @@ class CalculatorForm(forms.Form):
 
 class EmailChangeForm(forms.Form):
     """
-    form for user update this email
+    A form that lets a user change set their email while checking for a change in the
+    e-mail.
     """
     error_messages = {
         'email_mismatch': "The two email addresses fields didn't match.",

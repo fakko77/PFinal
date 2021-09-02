@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm, UserCreationForm, EmailChangeForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .models import Indicator, Position #Index
+from .models import Index, Indicator, Position
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib import messages
@@ -45,8 +45,6 @@ def index(request):
 
 def add(request):
     """view that allows add a new position """
-    pass
-    """
     if request.user.is_authenticated:
         form = PositionForm(request.POST or None, request.FILES or None)
         index = Index.objects.filter(user=request.user.id)
@@ -87,7 +85,7 @@ def add(request):
         return render(request, 'my_all_app/add.html', context)
     else:
         return render(request, 'registration/login.html')
-    """
+
 
 def manage(request):
     """view that allows Manage position"""
@@ -134,8 +132,6 @@ def history(request):
 
 def calculator(request):
     """view which allows to calculate """
-    pass
-    """
     form = CalculatorForm(request.POST or None, request.FILES or None)
     context = {
         'formcal': form,
@@ -182,12 +178,10 @@ def calculator(request):
         return render(request, 'my_all_app/calculator.html', context)
     else:
         return render(request, 'registration/login.html')
-"""
+
 
 def setting(request):
     """ view that allows configure this app"""
-    pass
-    """
     if request.user.is_authenticated:
 
         indexAll = Index.objects.filter(user=request.user.id)
@@ -244,15 +238,13 @@ def setting(request):
         return render(request, 'my_all_app/setting.html', context)
     else:
         return render(request, 'registration/login.html')
-"""
+
 
 def index_delete(request, indexId):
     """ view that allows delete a index  """
-    """
     index = Index.objects.get(id=indexId)
     index.delete()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    """
 
 
 def indicator_delete(request, indicatorId):
