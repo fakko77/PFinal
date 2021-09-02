@@ -50,10 +50,8 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
-<<<<<<< HEAD
-=======
     pass
->>>>>>> main
+
     """
     allPosition = Index.objects.all()
     CHOICES = []
