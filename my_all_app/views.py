@@ -16,6 +16,9 @@ import json
 
 def view_login(request):
     """view that allows view for login"""
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST.get('username', False)
         password = request.POST.get('password', False)
