@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from my_all_app.models import Index, Indicator, Position
+from my_all_app.models import Indicator, Position #index
 from django.contrib.auth.forms import PasswordChangeForm
 from django.forms import TextInput, EmailInput, PasswordInput, CharField
 from django.contrib.auth.forms import UserCreationForm
@@ -8,10 +8,11 @@ from django.contrib.auth.models import User
 
 
 class IndexForm(forms.ModelForm):
+    """
     class Meta:
         model = Index
         fields = ('name',)
-
+"""
 
 class IndicatorForm(forms.ModelForm):
     class Meta:
@@ -50,6 +51,7 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
+    """
     allPosition = Index.objects.all()
     CHOICES = []
     for allPosition in allPosition:
@@ -59,6 +61,7 @@ class CalculatorForm(forms.Form):
     risk = forms.IntegerField(label='RISK %')
     sl = forms.IntegerField(label='SL')
     Index = forms.ChoiceField(choices=CHOICES)
+    """
 
 
 class EmailChangeForm(forms.Form):
