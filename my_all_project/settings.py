@@ -30,11 +30,10 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-<<<<<<< Updated upstream
+
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1', '54.220.192.176']
-=======
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
->>>>>>> Stashed changes
+
 
 
 # Application definition
