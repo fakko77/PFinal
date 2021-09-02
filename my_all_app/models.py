@@ -47,5 +47,5 @@ class Position(models.Model):
         return self.position_indicator.name
 
 
-
-
+class Option(models.Model):
+    pass
