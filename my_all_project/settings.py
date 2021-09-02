@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#vr_zcto4!zmy$17muuc14-e(!o_#nf5pflr-#&qulew214j^5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#if os.environ.get('ENV') == 'PRODUCTION':
-DEBUG = False
-"""else:
+if os.environ.get('ENV') == 'PRODUCTION':
+    DEBUG = False
+else:
     DEBUG = True
-"""
+
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
 
 
@@ -138,17 +138,17 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#if os.environ.get('ENV') == 'PRODUCTION':
+if os.environ.get('ENV') == 'PRODUCTION':
 
     # Static files settings
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
     # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
+    STATICFILES_DIRS = (
         os.path.join(PROJECT_ROOT, 'static'),
     )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
