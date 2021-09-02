@@ -30,7 +30,7 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ['46.137.15.86', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
