@@ -26,17 +26,14 @@ SECRET_KEY = 'django-insecure-#vr_zcto4!zmy$17muuc14-e(!o_#nf5pflr-#&qulew214j^5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-<<<<<<< HEAD
+
 DEBUG = True
 
 
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1', '54.220.192.176']
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
 
-=======
-ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1', '54.220.192.176']
-ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
->>>>>>> main
+
 
 
 # Application definition
