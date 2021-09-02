@@ -29,7 +29,7 @@ class Index(models.Model):
 
 
 class Position(models.Model):
-    #position_index = models.ForeignKey(Index, on_delete=models.CASCADE, null=True)
+    position_index = models.ForeignKey(Index, on_delete=models.CASCADE, null=True)
     volume = models.FloatField(validators=[MinValueValidator(0.01), MaxValueValidator(10)],)
     price = models.FloatField()
     date = models.DateField(auto_now_add=True)
