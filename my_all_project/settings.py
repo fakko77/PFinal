@@ -137,8 +137,10 @@ LOGOUT_REDIRECT_URL = '/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+WHITENOISE_AUTOREFRESH = True
 
 if os.environ.get('ENV') == 'PRODUCTION':
+
 
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
