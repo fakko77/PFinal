@@ -50,19 +50,9 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
-    pass
-
-    """
-    allPosition = Index.objects.all()
-    CHOICES = []
-    for allPosition in allPosition:
-        a = (str(allPosition.name), str(allPosition.name))
-        CHOICES.append(a)
     balance = forms.IntegerField(label='solde')
     risk = forms.IntegerField(label='RISK %')
     sl = forms.IntegerField(label='SL')
-    Index = forms.ChoiceField(choices=CHOICES)
-    """
 
 
 class EmailChangeForm(forms.Form):

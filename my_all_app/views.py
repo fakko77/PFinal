@@ -133,14 +133,17 @@ def history(request):
 def calculator(request):
     """view which allows to calculate """
     form = CalculatorForm(request.POST or None, request.FILES or None)
+    index = Index.objects.filter(user=request.user.id)
     context = {
         'formcal': form,
+        'index': index,
     }
     if request.user.is_authenticated:
         if request.method == 'POST':
             if form.is_valid():
                 try:
-                    index1 = request.POST.get('Index')
+                    index1 = request.POST.get('position_index')
+                    print(index1)
                     index2 = "EUR" + index1[0:3]
                     balance = form.cleaned_data.get('balance')
                     risk = form.cleaned_data.get('risk')
@@ -174,6 +177,7 @@ def calculator(request):
                     context = {
                         'formcal': form,
                         'money': result,
+                        'index': index,
                     }
         return render(request, 'my_all_app/calculator.html', context)
     else:
