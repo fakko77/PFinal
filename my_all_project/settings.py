@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#vr_zcto4!zmy$17muuc14-e(!o_#nf5pflr-#&qulew214j^5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = False
-else:
+#if os.environ.get('ENV') == 'PRODUCTION':
+DEBUG = False
+"""else:
     DEBUG = True
-
+"""
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
 
 
@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
