@@ -50,6 +50,7 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
+    """
     allPosition = Index.objects.all()
     CHOICES = []
     for allPosition in allPosition:
@@ -59,6 +60,7 @@ class CalculatorForm(forms.Form):
     risk = forms.IntegerField(label='RISK %')
     sl = forms.IntegerField(label='SL')
     Index = forms.ChoiceField(choices=CHOICES)
+    """
 
 
 class EmailChangeForm(forms.Form):
