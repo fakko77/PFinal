@@ -25,9 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#vr_zcto4!zmy$17muuc14-e(!o_#nf5pflr-#&qulew214j^5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+if os.environ.get('ENV') == 'PRODUCTION':
+    DEBUG = False
+else:
+    DEBUG = True
+
+
 DEBUG = True
 
+
+ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1', '54.220.192.176']
 ALLOWED_HOSTS = ['myallapp.herokuapp.com', '127.0.0.1']
+
+
 
 
 # Application definition
@@ -52,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -127,6 +136,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+INTERNAL_IPS = ['127.0.0.1']
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -137,6 +149,7 @@ LOGOUT_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.environ.get('ENV') == 'PRODUCTION':
+
 
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))

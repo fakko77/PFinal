@@ -50,6 +50,10 @@ class PositionForm(forms.ModelForm):
 
 
 class CalculatorForm(forms.Form):
+<<<<<<< HEAD
+=======
+    pass
+>>>>>>> main
     """
     allPosition = Index.objects.all()
     CHOICES = []
@@ -65,7 +69,8 @@ class CalculatorForm(forms.Form):
 
 class EmailChangeForm(forms.Form):
     """
-    form for user update this email
+    A form that lets a user change set their email while checking for a change in the
+    e-mail.
     """
     error_messages = {
         'email_mismatch': "The two email addresses fields didn't match.",
