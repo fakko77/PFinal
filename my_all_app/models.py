@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Indicator(models.Model):
+    """model for custom indicator"""
     name = models.CharField(max_length=200, unique=True)
     description = models.TextField(null=True)
     user = models.IntegerField(unique=False, null=True)
@@ -18,6 +19,7 @@ class Indicator(models.Model):
 
 
 class Index(models.Model):
+    """model for financial index"""
     name = models.CharField(max_length=200, unique=True)
     user = models.IntegerField(unique=False, null=True)
 
@@ -29,8 +31,11 @@ class Index(models.Model):
 
 
 class Position(models.Model):
-    position_index = models.ForeignKey(Index, on_delete=models.CASCADE, null=True)
-    volume = models.FloatField(validators=[MinValueValidator(0.01), MaxValueValidator(10)],)
+    """model for custom position"""
+    position_index = models.ForeignKey(Index,
+                                       on_delete=models.CASCADE, null=True)
+    volume = models.FloatField(validators=[MinValueValidator(0.01),
+                                           MaxValueValidator(10)],)
     price = models.FloatField()
     date = models.DateField(auto_now_add=True)
     sl = models.FloatField(null=True)
@@ -45,4 +50,3 @@ class Position(models.Model):
 
     def returnIndicator(self):
         return self.position_indicator.name
-

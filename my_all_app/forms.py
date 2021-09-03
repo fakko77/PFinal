@@ -1,8 +1,5 @@
 from django import forms
-from django.forms import ModelForm
 from my_all_app.models import Index, Indicator, Position
-from django.contrib.auth.forms import PasswordChangeForm
-from django.forms import TextInput, EmailInput, PasswordInput, CharField
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -25,7 +22,6 @@ class PositionForm(forms.ModelForm):
         fields = ('volume', 'be', 'sl', 'tp1', 'tp2',
                   'position_indicator', 'comment')
         widgets = {
-           # 'position_index': forms.Select(attrs={'class': 'form-control rs'}),
             'volume': forms.NumberInput(attrs={'class': 'form-control',
                                                'step': '0.01',
                                                'min': '0.01', 'max': '5'}),

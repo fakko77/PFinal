@@ -1,17 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect
-from django.conf import settings
 from .forms import IndexForm, IndicatorForm, PositionForm, CalculatorForm, UserCreationForm, EmailChangeForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Index, Indicator, Position
-from django.contrib.auth.models import User
-from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 import requests
-import json
+
 
 
 def view_login(request):
@@ -79,7 +76,6 @@ def add(request):
                     PositionNew.position_indicator.add(object.id)
                 PositionNew.save()
                 return redirect('manage')
-
             else:
                 print(form.errors)
         return render(request, 'my_all_app/add.html', context)
@@ -155,7 +151,8 @@ def calculator(request):
                                       + index2 + '?apikey=be0024b5e186d1842ee2a98a37e4169b')
                     convert = r2.json()[0]['price']
                     result = round(
-                        (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
+                        (float(balance) * float(convert)) *
+                        (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
                     context = {
                         'formcal': form,
                         'money': result,
@@ -163,7 +160,7 @@ def calculator(request):
 
                 except IndexError:
 
-                    index1 = request.POST.get('Index')
+                    index1 = request.POST.get('position_index')
                     index2 = index1[0:3] + "EUR"
                     balance = form.cleaned_data.get('balance')
                     risk = form.cleaned_data.get('risk')
@@ -173,7 +170,8 @@ def calculator(request):
                     price = r1.json()[0]['price']
                     convert = 1
                     result = round(
-                        (float(balance) * float(convert)) * (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
+                        (float(balance) * float(convert)) *
+                        (float(risk) / 100) * float(price) / (float(sl) * 10), 2)
                     context = {
                         'formcal': form,
                         'money': result,
