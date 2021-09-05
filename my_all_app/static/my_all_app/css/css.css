@@ -67,3 +67,13 @@
     width:20%
 
 }
+
+@media screen and (min-width: 200px) and (max-width: 640px) {
+  #titre {
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+  .investing{
+    width:100%;
+  }
+}
