@@ -312,6 +312,7 @@ def signup(request):
             return render(request, 'my_all_app/index.html')
     else:
         form = UserCreationForm()
+        print(form.errors, len(form.errors))
     return render(request, 'my_all_app/signup.html', {'form': form})
 
 

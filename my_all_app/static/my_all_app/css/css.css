@@ -67,6 +67,17 @@
     width:20%
 
 }
+.indicator-option{
+    display:flex;
+     flex-direction: row;
+
+
+}
+.managetable{
+    width: 100%;
+
+}
+
 
 @media screen and (min-width: 200px) and (max-width: 640px) {
   #titre {
@@ -76,4 +87,18 @@
   .investing{
     width:100%;
   }
+  .info-account{
+    width:100%;
+  }
+  .indicator-option{
+    display:flex;
+     flex-direction: column;
+}
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 }
